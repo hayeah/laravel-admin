@@ -66,7 +66,8 @@ class Menu extends Model
         $branch = [];
 
         if (empty($elements)) {
-            $elements = static::with('roles')->orderByRaw('`order` = 0,`order`')->get()->toArray();
+            $orderColumn = DB::getQueryGrammar()->wrap("order");
+            $elements = static::with('roles')->orderByRaw($orderColumn . ' = 0,' .$orderColumn)->get()->toArray();
         }
 
         foreach ($elements as $element) {
